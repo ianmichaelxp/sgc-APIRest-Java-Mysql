@@ -1,12 +1,12 @@
 package br.com.ian.sgc.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Contato {
@@ -18,7 +18,8 @@ public class Contato {
 	private String primeiroNome;
 	private String ultimoNome;
 	private String email;
-	List<Telefone> telefones = new ArrayList<Telefone>();
+	@OneToMany(mappedBy = "contato")
+	List<Telefone> telefones;
 	
 	public Long getId() {
 		return id;
