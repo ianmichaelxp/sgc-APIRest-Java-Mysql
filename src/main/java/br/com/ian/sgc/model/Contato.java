@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Contato {
 	
@@ -19,6 +21,7 @@ public class Contato {
 	private String ultimoNome;
 	private String email;
 	@OneToMany(mappedBy = "contato")
+	@JsonManagedReference
 	List<Telefone> telefones;
 	
 	public Long getId() {
