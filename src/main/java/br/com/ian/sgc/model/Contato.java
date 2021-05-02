@@ -1,7 +1,9 @@
 package br.com.ian.sgc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +22,25 @@ public class Contato {
 	private String primeiroNome;
 	private String ultimoNome;
 	private String email;
-	@OneToMany(mappedBy = "contato")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contato")
 	@JsonManagedReference
-	List<Telefone> telefones;
+	private List<Telefone> telefones = new ArrayList<Telefone>();
+	
+	public Contato() {}
+		
+	public Contato(String primeiroNome, String ultimoNome, String email, List<Telefone> telefones) {
+		this.primeiroNome = primeiroNome;
+		this.ultimoNome = ultimoNome;
+		this.email = email;
+		this.telefones = telefones;
+		this.adicionarTelefone();
+	}
+	
+	private void adicionarTelefone() {
+		telefones.forEach(telefone -> {
+			telefone.setContato(this);
+		});
+	}
 	
 	public Long getId() {
 		return id;
