@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import br.com.ian.sgc.controller.dto.ContatoDTO;
 import br.com.ian.sgc.model.Contato;
 import br.com.ian.sgc.repository.ContatoRepository;
@@ -38,7 +37,19 @@ public class ContatoService {
 		return contatoDTO;
 	}
 	
-	
-	
-	
+	public ContatoDTO editarContato(@Valid Long id, ContatoDTO contatoDTO) {
+		Optional<Contato> contato = contatoRepository.findById(id);
+		if (!contato.isPresent()) {
+			throw new RuntimeException("Não foi possível editar, contato não encontrado.");
+		}
+		
+		Contato c = contato.get();
+		c.setPrimeiroNome(contatoDTO.getPrimeiro_nome());
+		c.setUltimoNome(contatoDTO.getUltimo_nome());
+		c.setEmail(contatoDTO.getEmail());
+		c.setTelefones(contatoDTO.getTelefones());
+		contatoRepository.save(c);
+
+		return new ContatoDTO(c);
+	}
 }
