@@ -43,5 +43,11 @@ public class ContatoController {
 	public ResponseEntity<ContatoDTO> criarContato(@Valid @RequestBody ContatoDTO contatoDTO) throws URISyntaxException{
 		ContatoDTO contato = contatoService.salvarContato(contatoDTO);
 		return ResponseEntity.created(new URI("/contatos")).body(contato);
-	}	
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ContatoDTO> atualizarContato(@PathVariable Long id, @RequestBody @Valid ContatoDTO contatoDTO) {		
+		ContatoDTO dto = contatoService.editarContato(id, contatoDTO);
+		return ResponseEntity.ok(dto);
+	}
 }
