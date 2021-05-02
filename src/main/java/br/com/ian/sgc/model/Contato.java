@@ -36,7 +36,7 @@ public class Contato {
 		this.adicionarTelefone();
 	}
 	
-	private void adicionarTelefone() {
+	public void adicionarTelefone() {
 		telefones.forEach(telefone -> {
 			telefone.setContato(this);
 		});

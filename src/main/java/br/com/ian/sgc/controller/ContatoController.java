@@ -4,10 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,14 +42,23 @@ public class ContatoController {
 	}
 	
 	@PostMapping
+	@Transactional
 	public ResponseEntity<ContatoDTO> criarContato(@Valid @RequestBody ContatoDTO contatoDTO) throws URISyntaxException{
 		ContatoDTO contato = contatoService.salvarContato(contatoDTO);
 		return ResponseEntity.created(new URI("/contatos")).body(contato);
 	}
 	
 	@PutMapping("/{id}")
+	@Transactional
 	public ResponseEntity<ContatoDTO> atualizarContato(@PathVariable Long id, @RequestBody @Valid ContatoDTO contatoDTO) {		
 		ContatoDTO dto = contatoService.editarContato(id, contatoDTO);
 		return ResponseEntity.ok(dto);
+	}
+	
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> removerContato(@PathVariable Long id) {
+		contatoService.excluirContato(id);	
+		return ResponseEntity.ok().build();
 	}
 }

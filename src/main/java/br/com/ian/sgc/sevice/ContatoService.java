@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import br.com.ian.sgc.controller.dto.ContatoDTO;
 import br.com.ian.sgc.model.Contato;
 import br.com.ian.sgc.repository.ContatoRepository;
+import br.com.ian.sgc.repository.TelefoneRepository;
 
 @Service
 public class ContatoService {
 
 	@Autowired
 	private ContatoRepository contatoRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 	
 	public List<ContatoDTO> listarContatos() {		
 		List<Contato> contatos = contatoRepository.findAll();
@@ -44,12 +48,20 @@ public class ContatoService {
 		}
 		
 		Contato c = contato.get();
+		telefoneRepository.deleteByContato(c);
 		c.setPrimeiroNome(contatoDTO.getPrimeiro_nome());
 		c.setUltimoNome(contatoDTO.getUltimo_nome());
 		c.setEmail(contatoDTO.getEmail());
 		c.setTelefones(contatoDTO.getTelefones());
-		contatoRepository.save(c);
+		c.adicionarTelefone();
 
 		return new ContatoDTO(c);
 	}
+	
+	public void excluirContato(Long id) {
+		Optional<Contato> optional = contatoRepository.findById(id);
+		if (!optional.isPresent())
+			throw new RuntimeException("Não foi possível excluir, contato não encontrado.");
+		contatoRepository.deleteById(id);
+	}	
 }
