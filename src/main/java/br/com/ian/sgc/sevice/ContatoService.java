@@ -53,7 +53,6 @@ public class ContatoService {
 		c.setUltimoNome(contatoDTO.getUltimo_nome());
 		c.setEmail(contatoDTO.getEmail());
 		c.setTelefones(contatoDTO.getTelefones());
-		c.adicionarTelefone();
 
 		return new ContatoDTO(c);
 	}

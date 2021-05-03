@@ -33,10 +33,10 @@ public class Contato {
 		this.ultimoNome = ultimoNome;
 		this.email = email;
 		this.telefones = telefones;
-		this.adicionarTelefone();
+		this.adicionarTelefones();
 	}
 	
-	public void adicionarTelefone() {
+	private void adicionarTelefones() {
 		telefones.forEach(telefone -> {
 			telefone.setContato(this);
 		});
@@ -71,5 +71,6 @@ public class Contato {
 	}
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+		adicionarTelefones();
 	}
 }
