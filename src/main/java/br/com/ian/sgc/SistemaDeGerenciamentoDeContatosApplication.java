@@ -8,5 +8,6 @@ public class SistemaDeGerenciamentoDeContatosApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaDeGerenciamentoDeContatosApplication.class, args);
+		System.out.println("✔️ Run!!");
 	}
 }

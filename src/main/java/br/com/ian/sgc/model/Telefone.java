@@ -1,12 +1,19 @@
 package br.com.ian.sgc.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import br.com.ian.sgc.model.enums.Tipo;
 
 @Entity
 public class Telefone {
@@ -14,7 +21,12 @@ public class Telefone {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String tipo;
+	@Enumerated(EnumType.STRING)
+	private Tipo tipo;
+	
+	@Column(nullable = false)
+	@NotNull
+    @Size(min = 3, max = 13)
 	private String numero;
 	
 	@ManyToOne
@@ -37,11 +49,11 @@ public class Telefone {
 		this.contato = contato;
 	}
 
-	public String getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 
@@ -52,5 +64,4 @@ public class Telefone {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-
 }
