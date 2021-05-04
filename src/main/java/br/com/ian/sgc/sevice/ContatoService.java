@@ -56,13 +56,13 @@ public class ContatoService {
 	public ContatoDTO editarContato(@Valid Long id, ContatoDTO contatoDTO) {
 		Optional<Contato> contato = contatoRepository.findById(id);
 		if (!contato.isPresent()) {
-			throw new RuntimeException("Não foi possível editar, contato não encontrado.");
+			throw new RegraNegocioException("Não foi possível editar, contato não encontrado.");
 		}
 		
 		Contato c = contato.get();
 		telefoneRepository.deleteByContato(c);
-		c.setPrimeiroNome(contatoDTO.getPrimeiro_nome());
-		c.setUltimoNome(contatoDTO.getUltimo_nome());
+		c.setPrimeiroNome(contatoDTO.getPrimeiroNome());
+		c.setUltimoNome(contatoDTO.getUltimoNome());
 		c.setEmail(contatoDTO.getEmail());
 		c.setTelefones(contatoDTO.getTelefones());
 
@@ -72,7 +72,7 @@ public class ContatoService {
 	public void excluirContato(Long id) {
 		Optional<Contato> optional = contatoRepository.findById(id);
 		if (!optional.isPresent())
-			throw new RuntimeException("Não foi possível excluir, contato não encontrado.");
+			throw new RegraNegocioException("Não foi possível excluir, contato não encontrado.");
 		contatoRepository.deleteById(id);
 	}	
 }
