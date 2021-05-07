@@ -25,7 +25,7 @@ public class Telefone {
 	private Tipo tipo;
 	
 	@Column(nullable = false)
-	@NotNull
+	@NotNull(message="Deve inserir um numeroo")
     @Size(min = 3, max = 13)
 	private String numero;
 	

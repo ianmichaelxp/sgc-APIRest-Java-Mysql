@@ -29,7 +29,7 @@ public class ContatoDTO {
 	@NotNull
 	private String email;
 	
-	@NotEmpty
+	@NotEmpty(message="Deve inserir um número")
 	private List<Telefone> telefones;
 	
 	public ContatoDTO() {}
